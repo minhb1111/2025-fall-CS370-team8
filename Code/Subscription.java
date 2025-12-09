@@ -1,39 +1,39 @@
+package com.subclear.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "subscriptions")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Subscription {
-    private String id;
-    private String companyName;
-    private String email;
-    private String platform;
-    private boolean isActive;
     
-    public Subscription(String id, String companyName, String email, String platform) {
-        this.id = id;
-        this.companyName = companyName;
-        this.email = email;
-        this.platform = platform;
-        this.isActive = true; // Active by default
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
-    // Getters and Setters
-    public String getId() { return id; }
-    public String getCompanyName() { return companyName; }
-    public String getEmail() { return email; }
-    public String getPlatform() { return platform; }
-    public boolean isActive() { return isActive; }
+    @Column(nullable = false)
+    private String serviceName;
     
-    public void setActive(boolean active) { 
-        this.isActive = active; 
-    }
+    @Column(nullable = false)
+    private BigDecimal amount;
     
-    public void toggleSubscription() {
-        this.isActive = !this.isActive;
-        System.out.println(companyName + " is now " + 
-            (isActive ? "SUBSCRIBED" : "UNSUBSCRIBED"));
-    }
+    @Column(nullable = false)
+    private LocalDate dueDate;
     
-    @Override
-    public String toString() {
-        String status = isActive ? "SUBSCRIBED" : "UNSUBSCRIBED";
-        return String.format("%-20s | %-25s | %-20s | %s", 
-            companyName, email, platform, status);
-    }
+    @Column(nullable = false)
+    private boolean active = true;
+    
+    private String category;
+    
+    private String description;
+    
+    @Column(nullable = false)
+    private String userId = "default-user";
 }

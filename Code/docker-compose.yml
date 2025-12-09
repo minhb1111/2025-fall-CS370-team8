@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  subclear-app:
+    build: .
+    container_name: subclear-web
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    volumes:
+      - subclear-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  subclear-data:

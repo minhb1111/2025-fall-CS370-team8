@@ -1,53 +1,29 @@
-import java.util.ArrayList;
-import java.util.List;
+package com.subclear.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false, unique = true)
     private String username;
+    
+    @Column(nullable = false)
     private String password;
-    private List<Subscription> subscriptions;
     
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-        this.subscriptions = new ArrayList<>();
-    }
+    @Column(nullable = false)
+    private String email;
     
-    public String getUsername() { return username; }
-    
-    public boolean authenticate(String password) {
-        return this.password.equals(password);
-    }
-    
-    public void addSubscription(Subscription subscription) {
-        subscriptions.add(subscription);
-        System.out.println("Added: " + subscription.getCompanyName());
-    }
-    
-    public void removeSubscription(String subscriptionId) {
-        subscriptions.removeIf(sub -> sub.getId().equals(subscriptionId));
-        System.out.println("Subscription removed");
-    }
-    
-    public List<Subscription> getSubscriptions() {
-        return subscriptions;
-    }
-    
-    public void displaySubscriptions() {
-        if (subscriptions.isEmpty()) {
-            System.out.println("\n📭 No subscriptions yet. Add some to get started!");
-            return;
-        }
-        
-        System.out.println("\n" + "=".repeat(90));
-        System.out.println("YOUR SUBSCRIPTIONS (" + subscriptions.size() + " total)");
-        System.out.println("=".repeat(90));
-        System.out.printf("%-20s | %-25s | %-20s | %s\n", 
-            "COMPANY", "EMAIL", "PLATFORM", "STATUS");
-        System.out.println("-".repeat(90));
-        
-        for (Subscription sub : subscriptions) {
-            System.out.println(sub);
-        }
-        System.out.println("=".repeat(90));
-    }
+    private String fullName;
 }
